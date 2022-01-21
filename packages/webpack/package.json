@@ -1,0 +1,54 @@
+{
+  "name": "@unocss/webpack",
+  "version": "0.22.5",
+  "description": "The Webpack plugin for UnoCSS",
+  "keywords": [
+    "unocss",
+    "webpack-plugin"
+  ],
+  "homepage": "https://github.com/antfu/unocss/tree/main/packages/webpack#readme",
+  "bugs": {
+    "url": "https://github.com/antfu/unocss/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/unocss.git",
+    "directory": "packages/webpack"
+  },
+  "funding": "https://github.com/sponsors/antfu",
+  "license": "MIT",
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub"
+  },
+  "dependencies": {
+    "@rollup/pluginutils": "^4.1.2",
+    "@unocss/config": "workspace:*",
+    "@unocss/core": "workspace:*",
+    "unplugin": "^0.3.0",
+    "webpack-sources": "^3.2.3"
+  },
+  "peerDependencies": {
+    "webpack": "^4 || ^5"
+  },
+  "devDependencies": {
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-sources": "^3.2.0",
+    "webpack": "^5.66.0"
+  }
+}

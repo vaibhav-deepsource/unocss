@@ -1,14 +1,12 @@
-import { Preset } from '@unocss/core'
-import { rules } from './rules'
-import { theme } from './theme'
-import { variants } from './variants'
+import { presetWind } from '@unocss/preset-wind'
+import type { PresetMiniOptions, Theme } from '@unocss/preset-mini'
 
-export { theme, colors } from './theme'
+export { theme, colors } from '@unocss/preset-wind'
 
-export const preset = (): Preset => ({
-  theme,
-  rules,
-  variants,
-})
+export type { Theme }
 
-export default preset
+export interface PresetUnoOptions extends PresetMiniOptions {}
+
+export const presetUno = presetWind
+
+export default presetUno

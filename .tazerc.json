@@ -1,0 +1,8 @@
+{
+  "exclude": [
+    "find-up",
+    "execa",
+    "gzip-size",
+    "@types/vscode"
+  ]
+}

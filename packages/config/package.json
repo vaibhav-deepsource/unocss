@@ -1,38 +1,42 @@
 {
   "name": "@unocss/config",
-  "version": "0.1.0",
+  "version": "0.22.5",
   "description": "Config loader for UnoCSS",
   "keywords": [],
-  "homepage": "https://github.com/antfu/unocss#readme",
+  "homepage": "https://github.com/antfu/unocss/tree/main/packages/config#readme",
   "bugs": {
     "url": "https://github.com/antfu/unocss/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antfu/unocss.git"
+    "url": "git+https://github.com/antfu/unocss.git",
+    "directory": "packages/config"
   },
   "funding": "https://github.com/sponsors/antfu",
   "license": "MIT",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch src",
-    "prepublishOnly": "nr build"
+    "build": "unbuild",
+    "stub": "unbuild --stub"
+  },
+  "engines": {
+    "node": ">=14"
   },
   "dependencies": {
     "@unocss/core": "workspace:*",
-    "sucrase": "^3.20.3"
-  },
-  "devDependencies": {
-    "find-up": "^6.2.0"
+    "unconfig": "^0.2.2"
   }
 }

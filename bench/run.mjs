@@ -2,9 +2,9 @@
 import { execSync } from 'child_process'
 import { join } from 'path'
 import fs from 'fs-extra'
-import { escapeSelector } from 'unocss'
-import { dir, targets, getVersions } from './meta.mjs'
-import { writeMock, classes } from './gen.mjs'
+import { escapeSelector } from '@unocss/core'
+import { dir, getVersions, targets } from './meta.mjs'
+import { classes, writeMock } from './gen.mjs'
 
 const times = 50
 const metric = 'min' // 'average' or 'min'

@@ -1,38 +1,43 @@
-import { Plugin } from 'vite'
-import { createGenerator, presetUno, UserConfigDefaults } from 'unocss'
-import { loadConfig } from '@unocss/config'
-import { createContext } from './context'
-import { ChunkModeBuildPlugin } from './chunk-build'
-import { GlobalModeDevPlugin } from './global-dev'
-import { PerModuleModePlugin } from './per-module'
-import { UnocssUserOptions } from './types'
-import { VueScopedPlugin } from './vue-scoped'
-import { GlobalModeBuildPlugin } from './global-build'
+import type { Plugin } from 'vite'
+import type { UserConfigDefaults } from '@unocss/core'
+import UnocssInspector from '@unocss/inspector'
+import { createContext } from '../../plugins-common'
+import { ChunkModeBuildPlugin } from './modes/chunk-build'
+import { GlobalModeDevPlugin, GlobalModePlugin } from './modes/global'
+import { PerModuleModePlugin } from './modes/per-module'
+import { VueScopedPlugin } from './modes/vue-scoped'
+import { SvelteScopedPlugin } from './modes/svelte-scoped'
+import { ShadowDomModuleModePlugin } from './modes/shadow-dom'
 import { ConfigHMRPlugin } from './config-hmr'
+import type { VitePluginConfig } from './types'
 
 export * from './types'
-export * from './chunk-build'
-export * from './global-dev'
-export * from './per-module'
-export * from './vue-scoped'
+export * from './modes/chunk-build'
+export * from './modes/global'
+export * from './modes/per-module'
+export * from './modes/vue-scoped'
+export * from './modes/svelte-scoped'
+
+export type { UnocssPluginContext } from '../../plugins-common'
+
+export function defineConfig<Theme extends {}>(config: VitePluginConfig<Theme>) {
+  return config
+}
 
 export default function UnocssPlugin(
-  configOrPath?: UnocssUserOptions | string,
-  defaults: UserConfigDefaults = {
-    presets: [
-      presetUno(),
-    ],
-  },
+  configOrPath?: VitePluginConfig | string,
+  defaults: UserConfigDefaults = {},
 ): Plugin[] {
-  const { config = {}, filepath } = loadConfig(configOrPath)
-
-  const mode = config.mode ?? 'global'
-  const uno = createGenerator(config, defaults)
-  const ctx = createContext(uno, config, filepath)
+  const ctx = createContext<VitePluginConfig>(configOrPath, defaults)
+  const inlineConfig = (configOrPath && typeof configOrPath !== 'string') ? configOrPath : {}
+  const mode = inlineConfig.mode ?? 'global'
 
   const plugins = [
     ConfigHMRPlugin(ctx),
   ]
+
+  if (inlineConfig.inspector !== false)
+    plugins.push(UnocssInspector(ctx))
 
   if (mode === 'per-module') {
     plugins.push(PerModuleModePlugin(ctx))
@@ -40,16 +45,19 @@ export default function UnocssPlugin(
   else if (mode === 'vue-scoped') {
     plugins.push(VueScopedPlugin(ctx))
   }
+  else if (mode === 'svelte-scoped') {
+    plugins.push(SvelteScopedPlugin(ctx))
+  }
+  else if (mode === 'shadow-dom') {
+    plugins.push(ShadowDomModuleModePlugin(ctx))
+  }
   else if (mode === 'global') {
-    plugins.push(
-      ...GlobalModeBuildPlugin(ctx),
-      GlobalModeDevPlugin(ctx),
-    )
+    plugins.push(...GlobalModePlugin(ctx))
   }
   else if (mode === 'dist-chunk') {
     plugins.push(
       ChunkModeBuildPlugin(ctx),
-      GlobalModeDevPlugin(ctx),
+      ...GlobalModeDevPlugin(ctx),
     )
   }
   else {

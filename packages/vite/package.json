@@ -1,15 +1,20 @@
 {
   "name": "@unocss/vite",
-  "version": "0.1.0",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/antfu/unocss#readme",
+  "version": "0.22.5",
+  "description": "The Vite plugin for UnoCSS",
+  "keywords": [
+    "unocss",
+    "vite",
+    "vite-plugin"
+  ],
+  "homepage": "https://github.com/antfu/unocss/tree/main/packages/vite#readme",
   "bugs": {
     "url": "https://github.com/antfu/unocss/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antfu/unocss.git"
+    "url": "git+https://github.com/antfu/unocss.git",
+    "directory": "packages/vite"
   },
   "funding": "https://github.com/sponsors/antfu",
   "license": "MIT",
@@ -17,29 +22,29 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     }
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch src",
-    "prepublishOnly": "nr build"
+    "build": "unbuild",
+    "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@rollup/pluginutils": "^4.1.1",
+    "@rollup/pluginutils": "^4.1.2",
     "@unocss/config": "workspace:*",
     "@unocss/core": "workspace:*",
-    "@unocss/scope": "workspace:*",
-    "nanoevents": "^6.0.2"
+    "@unocss/inspector": "workspace:*",
+    "@unocss/scope": "workspace:*"
   },
   "devDependencies": {
-    "vite": "^2.6.9"
+    "vite": "^2.7.12"
   }
 }

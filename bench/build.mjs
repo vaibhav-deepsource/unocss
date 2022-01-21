@@ -2,7 +2,7 @@
 import { join } from 'path'
 import fs from 'fs-extra'
 import { build } from 'vite'
-import { targets, dir } from './meta.mjs'
+import { dir, targets } from './meta.mjs'
 
 const result = {}
 const date = new Date().toISOString()
@@ -22,7 +22,7 @@ function BuildTimePlugin(name) {
   }
 }
 
-console.log('warning up...')
+console.log('warming up...')
 for (let i = 0; i < 10; i++)
   await run('none')
 

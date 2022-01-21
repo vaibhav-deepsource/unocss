@@ -1,15 +1,22 @@
 {
   "name": "@unocss/preset-icons",
-  "version": "0.1.0",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/antfu/unocss#readme",
+  "version": "0.22.5",
+  "description": "Pure CSS Icons for UnoCSS",
+  "keywords": [
+    "unocss",
+    "unocss-preset",
+    "icons",
+    "css-icons",
+    "iconify"
+  ],
+  "homepage": "https://github.com/antfu/unocss/tree/main/packages/preset-icons#readme",
   "bugs": {
     "url": "https://github.com/antfu/unocss/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antfu/unocss.git"
+    "url": "git+https://github.com/antfu/unocss.git",
+    "directory": "packages/preset-icons"
   },
   "funding": "https://github.com/sponsors/antfu",
   "license": "MIT",
@@ -17,15 +24,17 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     },
     "./fs": {
-      "require": "./dist/fs.js",
-      "import": "./dist/fs.mjs"
+      "require": "./dist/fs.cjs",
+      "import": "./dist/fs.mjs",
+      "types": "./dist/fs.d.ts"
     }
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
@@ -33,16 +42,15 @@
     "*.css"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch src",
-    "prepublishOnly": "nr build"
+    "build": "unbuild",
+    "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@iconify/utils": "^1.0.18",
+    "@iconify/utils": "^1.0.21",
     "@unocss/core": "workspace:*",
-    "local-pkg": "^0.4.0"
+    "local-pkg": "^0.4.1"
   },
   "devDependencies": {
-    "@iconify/types": "^1.0.10"
+    "@iconify/types": "^1.0.12"
   }
 }

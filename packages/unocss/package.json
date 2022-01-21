@@ -1,8 +1,15 @@
 {
   "name": "unocss",
-  "version": "0.1.0",
-  "description": "",
-  "keywords": [],
+  "version": "0.22.5",
+  "description": "The instant on-demand Atomic CSS engine.",
+  "keywords": [
+    "unocss",
+    "atomic-css",
+    "atomic-css-engine",
+    "css",
+    "tailwind",
+    "windicss"
+  ],
   "homepage": "https://github.com/antfu/unocss#readme",
   "bugs": {
     "url": "https://github.com/antfu/unocss/issues"
@@ -17,15 +24,17 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     },
     "./vite": {
-      "require": "./dist/vite.js",
-      "import": "./dist/vite.mjs"
+      "require": "./dist/vite.cjs",
+      "import": "./dist/vite.mjs",
+      "types": "./dist/vite.d.ts"
     }
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "index.d.ts",
   "files": [
@@ -33,17 +42,20 @@
     "*.d.ts"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch src",
-    "prepublishOnly": "nr build && cp ../../README.md ."
+    "build": "unbuild",
+    "stub": "unbuild --stub"
   },
   "dependencies": {
     "@unocss/core": "workspace:*",
+    "@unocss/cli": "workspace:*",
+    "@unocss/reset": "workspace:*",
+    "@unocss/preset-icons": "workspace:*",
     "@unocss/preset-attributify": "workspace:*",
     "@unocss/preset-uno": "workspace:*",
+    "@unocss/preset-web-fonts": "workspace:*",
     "@unocss/vite": "workspace:*"
   },
-  "devDependencies": {
-    "nanoevents": "^6.0.2"
+  "engines": {
+    "node": ">=14"
   }
 }

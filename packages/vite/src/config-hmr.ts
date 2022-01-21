@@ -1,22 +1,32 @@
-import { loadConfig } from '@unocss/config'
-import { Plugin } from 'vite'
-import { Context } from './context'
+import type { Plugin } from 'vite'
+import type { UnocssPluginContext } from '../../plugins-common/context'
 
-export function ConfigHMRPlugin({ uno, configFilepath: filepath, invalidate, tokens, modules }: Context): Plugin | undefined {
-  if (!filepath)
-    return
-
+export function ConfigHMRPlugin(ctx: UnocssPluginContext): Plugin | undefined {
+  const { ready, uno } = ctx
   return {
     name: 'unocss:config',
-    configureServer(server) {
-      server.watcher.add(filepath)
+    async configResolved() {
+      await ready
+    },
+    async configureServer(server) {
+      uno.config.envMode = 'dev'
+
+      const { sources } = await ready
+
+      if (!sources.length)
+        return
+
+      server.watcher.add(sources)
       server.watcher.on('change', async(p) => {
-        if (p !== filepath)
+        if (!sources.includes(p))
           return
-        uno.setConfig(loadConfig(filepath).config)
-        tokens.clear()
-        await Promise.all(modules.map((code, id) => uno.applyExtractors(code, id, tokens)))
-        invalidate()
+
+        await ctx.reloadConfig()
+
+        server.ws.send({
+          type: 'custom',
+          event: 'unocss:config-changed',
+        })
       })
     },
   }

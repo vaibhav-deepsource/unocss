@@ -1,24 +1,17 @@
 <script setup lang="ts">
-// @ts-ignore
-import { Splitpanes, Pane } from 'splitpanes'
-import { isDark } from '../logics/dark'
-import { inputHTML, output, init } from '../logics/uno'
+import { breakpointsTailwind } from '@vueuse/core'
+// @ts-expect-error missing types
+import { Pane, Splitpanes } from 'splitpanes'
 
-const iframeData = reactive({
-  css: computed(() => output.value.css),
-  html: inputHTML,
-})
+const bp = useBreakpoints(breakpointsTailwind)
+
+const isMobile = bp.smaller('sm')
 </script>
 
 <template>
-  <Splitpanes h-screen w-screen>
+  <Splitpanes h-screen w-screen :horizontal="isMobile">
     <Pane>
-      <preview-box
-        v-show="init"
-        v-bind="iframeData"
-        :dark="isDark"
-        h-full
-      />
+      <Preview />
     </Pane>
     <Pane>
       <Editor />

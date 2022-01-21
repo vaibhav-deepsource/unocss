@@ -1,4 +1,5 @@
-import { createGenerator, GenerateResult, UserConfig } from 'unocss'
+import type { GenerateResult, UserConfig } from 'unocss'
+import { createGenerator } from 'unocss'
 import * as __unocss from 'unocss'
 import { customConfigRaw, inputHTML } from './url'
 import { defaultConfig } from './config'
@@ -16,7 +17,7 @@ export const customConfigError = ref<Error>()
 
 export const uno = createGenerator({}, defaultConfig.value)
 export const options = useStorage('unocss-options', {})
-export const output = shallowRef<GenerateResult>({ css: '', matched: new Set<string>() })
+export const output = shallowRef<GenerateResult>()
 
 debouncedWatch(
   customConfigRaw,

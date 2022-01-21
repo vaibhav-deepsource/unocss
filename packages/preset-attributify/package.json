@@ -1,15 +1,19 @@
 {
   "name": "@unocss/preset-attributify",
-  "version": "0.1.0",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/antfu/unocss#readme",
+  "version": "0.22.5",
+  "description": "Attributify preset for UnoCSS",
+  "keywords": [
+    "unocss",
+    "unocss-preset"
+  ],
+  "homepage": "https://github.com/antfu/unocss/tree/main/packages/preset-attributify#readme",
   "bugs": {
     "url": "https://github.com/antfu/unocss/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antfu/unocss.git"
+    "url": "git+https://github.com/antfu/unocss.git",
+    "directory": "packages/preset-attributify"
   },
   "funding": "https://github.com/sponsors/antfu",
   "license": "MIT",
@@ -17,20 +21,20 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     }
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch src",
-    "prepublishOnly": "nr build"
+    "build": "unbuild",
+    "stub": "unbuild --stub"
   },
   "dependencies": {
     "@unocss/core": "workspace:*"
