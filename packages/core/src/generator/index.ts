@@ -11,8 +11,8 @@ export class UnoGenerator {
   public parentOrders = new Map<string, number>()
 
   constructor(
-    public userConfig: UserConfig = {},
-    public defaults: UserConfigDefaults = {},
+    userConfig: UserConfig = {},
+    defaults: UserConfigDefaults = {},
   ) {
     this.config = resolveConfig(userConfig, defaults)
   }
